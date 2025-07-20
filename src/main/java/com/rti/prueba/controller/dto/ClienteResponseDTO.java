@@ -1,6 +1,5 @@
 package com.rti.prueba.controller.dto;
 
-import com.rti.prueba.bd.orm.ClienteORM;
 import com.rti.prueba.enums.Ocupacion;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,20 +25,4 @@ public class ClienteResponseDTO {
     private Ocupacion ocupacion;
     private Boolean esViable;
     private int edad;
-
-    // Método estático para crear desde ClienteORM
-    public static ClienteResponseDTO fromEntity(ClienteORM cliente, int edad) {
-        return new ClienteResponseDTO(
-                cliente.getNumeroDocumento(),
-                cliente.getNombre(),
-                cliente.getApellidos(),
-                cliente.getFechaNacimiento(),
-                cliente.getCiudad(),
-                cliente.getCorreoElectronico(),
-                cliente.getTelefono(),
-                cliente.getOcupacion(),
-                cliente.getEsViable(),
-                edad
-        );
-    }
 }

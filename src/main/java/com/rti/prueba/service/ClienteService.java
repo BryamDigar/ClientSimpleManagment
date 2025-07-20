@@ -9,6 +9,7 @@ import com.rti.prueba.exception.ClienteAlreadyExistsException;
 import com.rti.prueba.exception.ClienteNotFoundException;
 import com.rti.prueba.exception.ClienteServiceException;
 import com.rti.prueba.exception.ClienteValidationException;
+import com.rti.prueba.mapper.ClienteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ClienteService {
     private static final int EDAD_MAXIMA_PRODUCTIVA = 65;
 
     private final ClienteJPA clienteJPA;
+    private final ClienteMapper clienteMapper;
 
     /**
      * Crear un nuevo cliente
@@ -55,16 +57,9 @@ public class ClienteService {
                 throw new ClienteValidationException("La fecha de nacimiento no puede ser futura");
             }
 
-            // Crear la entidad
-            ClienteORM cliente = new ClienteORM();
+            // Crear la entidad usando el mapper
+            ClienteORM cliente = clienteMapper.createDTOToORM(clienteCreateDTO);
             cliente.setNumeroDocumento(clienteCreateDTO.getNumeroDocumento());
-            cliente.setNombre(clienteCreateDTO.getNombre().trim());
-            cliente.setApellidos(clienteCreateDTO.getApellidos().trim());
-            cliente.setFechaNacimiento(clienteCreateDTO.getFechaNacimiento());
-            cliente.setCiudad(clienteCreateDTO.getCiudad().trim());
-            cliente.setCorreoElectronico(clienteCreateDTO.getCorreoElectronico().toLowerCase().trim());
-            cliente.setTelefono(clienteCreateDTO.getTelefono().trim());
-            cliente.setOcupacion(clienteCreateDTO.getOcupacion());
 
             // Calcular viabilidad
             cliente.setEsViable(esClienteViable(edad));
@@ -90,8 +85,9 @@ public class ClienteService {
             List<ClienteORM> clientes = clienteJPA.findAll();
             return clientes.stream()
                     .map(cliente -> {
-                        int edad = calcularEdad(cliente.getFechaNacimiento());
-                        return ClienteResponseDTO.fromEntity(cliente, edad);
+                        ClienteResponseDTO responseDTO = clienteMapper.ORMToResponseDTO(cliente);
+                        responseDTO.setEdad(calcularEdad(cliente.getFechaNacimiento()));
+                        return responseDTO;
                     })
                     .collect(Collectors.toList());
         } catch (Exception e) {
@@ -108,8 +104,9 @@ public class ClienteService {
             ClienteORM cliente = clienteJPA.findById(numeroDocumento)
                     .orElseThrow(() -> new ClienteNotFoundException(numeroDocumento));
             
-            int edad = calcularEdad(cliente.getFechaNacimiento());
-            return ClienteResponseDTO.fromEntity(cliente, edad);
+            ClienteResponseDTO responseDTO = clienteMapper.ORMToResponseDTO(cliente);
+            responseDTO.setEdad(calcularEdad(cliente.getFechaNacimiento()));
+            return responseDTO;
         } catch (ClienteNotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -138,13 +135,7 @@ public class ClienteService {
             }
 
             // Actualizar datos
-            cliente.setNombre(clienteUpdateDTO.getNombre().trim());
-            cliente.setApellidos(clienteUpdateDTO.getApellidos().trim());
-            cliente.setFechaNacimiento(clienteUpdateDTO.getFechaNacimiento());
-            cliente.setCiudad(clienteUpdateDTO.getCiudad().trim());
-            cliente.setCorreoElectronico(clienteUpdateDTO.getCorreoElectronico().toLowerCase().trim());
-            cliente.setTelefono(clienteUpdateDTO.getTelefono().trim());
-            cliente.setOcupacion(clienteUpdateDTO.getOcupacion());
+            clienteMapper.updateDTOToORM(clienteUpdateDTO, cliente);
 
             // Recalcular viabilidad
             cliente.setEsViable(esClienteViable(edad));
@@ -190,8 +181,9 @@ public class ClienteService {
             List<ClienteORM> clientes = clienteJPA.findByNombreContainingIgnoreCaseOrApellidosContainingIgnoreCase(busqueda, busqueda);
             return clientes.stream()
                     .map(cliente -> {
-                        int edad = calcularEdad(cliente.getFechaNacimiento());
-                        return ClienteResponseDTO.fromEntity(cliente, edad);
+                        ClienteResponseDTO responseDTO = clienteMapper.ORMToResponseDTO(cliente);
+                        responseDTO.setEdad(calcularEdad(cliente.getFechaNacimiento()));
+                        return responseDTO;
                     })
                     .collect(Collectors.toList());
         } catch (Exception e) {
