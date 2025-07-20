@@ -1,5 +1,6 @@
-package com.rti.prueba.controller.exception;
+package com.rti.prueba.exception.handler;
 
+import com.rti.prueba.exception.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

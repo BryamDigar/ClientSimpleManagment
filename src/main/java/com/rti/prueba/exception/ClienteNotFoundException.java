@@ -1,4 +1,4 @@
-package com.rti.prueba.controller.exception;
+package com.rti.prueba.exception;
 
 /**
  * Excepción lanzada cuando un cliente no es encontrado en la base de datos

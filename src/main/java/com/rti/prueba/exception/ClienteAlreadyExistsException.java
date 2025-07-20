@@ -1,4 +1,4 @@
-package com.rti.prueba.controller.exception;
+package com.rti.prueba.exception;
 
 /**
  * Excepción lanzada cuando ya existe un cliente con el mismo número de documento o correo electrónico

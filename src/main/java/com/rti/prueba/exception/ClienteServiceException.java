@@ -1,4 +1,4 @@
-package com.rti.prueba.controller.exception;
+package com.rti.prueba.exception;
 
 /**
  * Excepción lanzada cuando ocurre un error interno del servidor

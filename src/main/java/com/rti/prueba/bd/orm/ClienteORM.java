@@ -1,6 +1,6 @@
 package com.rti.prueba.bd.orm;
 
-import com.rti.prueba.bd.enumData.Ocupacion;
+import com.rti.prueba.enums.Ocupacion;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

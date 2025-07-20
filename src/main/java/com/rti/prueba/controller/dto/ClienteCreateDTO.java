@@ -1,7 +1,6 @@
 package com.rti.prueba.controller.dto;
 
-import com.rti.prueba.bd.enumData.Ocupacion;
-import com.rti.prueba.bd.orm.ClienteORM;
+import com.rti.prueba.enums.Ocupacion;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

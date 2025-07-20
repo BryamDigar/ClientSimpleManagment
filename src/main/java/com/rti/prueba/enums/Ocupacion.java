@@ -1,7 +1,7 @@
-package com.rti.prueba.bd.enumData;
+package com.rti.prueba.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.rti.prueba.controller.exception.EnumConversionException;
+import com.rti.prueba.exception.EnumConversionException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

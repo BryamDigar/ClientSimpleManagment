@@ -1,4 +1,4 @@
-package com.rti.prueba.bd.enumData;
+package com.rti.prueba.enums;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
