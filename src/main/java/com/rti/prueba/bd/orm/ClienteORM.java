@@ -1,5 +1,6 @@
 package com.rti.prueba.bd.orm;
 
+import com.rti.prueba.bd.enumData.Ocupacion;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +38,6 @@ public class ClienteORM {
     @Column(name = "telefono", nullable = false, length = 20)
     private String telefono;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "ocupacion", nullable = false)
     private Ocupacion ocupacion;
 
@@ -52,9 +52,6 @@ public class ClienteORM {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    public enum Ocupacion {
-        Empleado, Independiente, Pensionado
-    }
 
     @PrePersist
     protected void onCreate() {

@@ -1,5 +1,6 @@
 package com.rti.prueba.controller.dto;
 
+import com.rti.prueba.bd.enumData.Ocupacion;
 import com.rti.prueba.bd.orm.ClienteORM;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -50,5 +51,5 @@ public class ClienteCreateDTO {
     private String telefono;
     
     @NotNull(message = "La ocupación es obligatoria")
-    private ClienteORM.Ocupacion ocupacion;
+    private Ocupacion ocupacion;
 }

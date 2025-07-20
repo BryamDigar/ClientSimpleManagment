@@ -1,5 +1,6 @@
 package com.rti.prueba.controller.dto;
 
+import com.rti.prueba.bd.enumData.Ocupacion;
 import com.rti.prueba.bd.orm.ClienteORM;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class ClienteResponseDTO {
     private String ciudad;
     private String correoElectronico;
     private String telefono;
-    private ClienteORM.Ocupacion ocupacion;
+    private Ocupacion ocupacion;
     private Boolean esViable;
     private int edad;
 
